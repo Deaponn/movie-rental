@@ -8,7 +8,7 @@ const leftNavigation = [
         type: "navigation",
     },
     {
-        title: "Movies",
+        title: "Watch",
         route: "/movies",
         type: "navigation",
     },

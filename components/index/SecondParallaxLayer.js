@@ -1,10 +1,6 @@
 import styled from "styled-components";
+import NavigationItem from "../Header/NavigationItem";
 import { ParallaxLayer } from "@react-spring/parallax";
-import { useSpring, useTransition, useSpringRef, useChain, animated } from "@react-spring/web";
-
-const BackgroundParallax = styled(ParallaxLayer)`
-    background-color: ${({ theme }) => theme.panels.second};
-`;
 
 const StyledParallaxLayer = styled(ParallaxLayer)`
     display: flex;
@@ -12,14 +8,22 @@ const StyledParallaxLayer = styled(ParallaxLayer)`
     align-items: center;
     color: ${({ theme }) => theme.font.primary};
     font-family: Lato, Sans-Serif;
-    text-align: center;
+    z-index: 1;
+    font-size: 48px;
 `;
 
 export default function SecondParallaxLayer({}) {
     return (
         <>
-            <BackgroundParallax offset={0.9999} speed={0.3} />
-            {/* <StyledParallaxLayer offset={1} speed={1} /> */}
+            <StyledParallaxLayer offset={0.6} speed={0.5}>
+                <NavigationItem title="Login" route="/api/auth/login" type="auth0" />
+            </StyledParallaxLayer>
+            <StyledParallaxLayer offset={0.9} speed={0.7}>
+                it takes only so
+            </StyledParallaxLayer>
+            <StyledParallaxLayer offset={0.97} speed={0.7}>
+                little work to begin
+            </StyledParallaxLayer>
         </>
     );
 }
