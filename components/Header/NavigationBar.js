@@ -1,11 +1,11 @@
 import styled from "styled-components";
+import Image from "next/image";
 import Hamburger from "./Hamburger";
 import MenuSmartphones from "./MenuSmartphones";
 import NavigationItem from "./NavigationItem";
-import Image from "next/image";
-import { device } from "../constants/breakpoints";
-import { useState } from "react";
 import Switch from "./Switch";
+import { device } from "../../constants/breakpoints";
+import { useState } from "react";
 
 const MobileContainer = styled.div`
     display: none;
@@ -96,7 +96,7 @@ const SwitchContainer = styled.div`
     position: absolute;
     top: 24px;
     right: 24px;
-    
+
     @media ${device.laptop} {
         right: 4px;
     }
@@ -115,10 +115,13 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
                 <Hamburger
                     isOpen={hamburgerIsOpen}
                     toggle={() => {
-                        setHamburgerIsOpen(!hamburgerIsOpen);
+                        setHamburgerIsOpen((current) => !current);
                     }}
                 />
                 <MenuSmartphones
+                    onNavigate={() => {
+                        setHamburgerIsOpen(false)
+                    }}
                     isOpen={hamburgerIsOpen}
                     items={[...leftNavigationItems, ...rightNavigationItems]}
                     isDarkMode={isDarkMode}
@@ -134,7 +137,12 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
                 <Image src="/ui/icon.png" alt="Logo" width={150} height={100} />
                 <RightNavBar elements={rightNavigationItems.length}>
                     {rightNavigationItems.map(({ title, route, type }, index) => (
-                        <NavigationItem key={index} title={title} route={route} type={type} />
+                        <NavigationItem
+                            key={index}
+                            title={title}
+                            route={route}
+                            type={type}
+                        />
                     ))}
                 </RightNavBar>
                 <SwitchContainer>

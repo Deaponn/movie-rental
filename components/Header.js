@@ -1,5 +1,5 @@
 import { useUser } from "@auth0/nextjs-auth0";
-import NavigationBar from "./NavigationBar";
+import NavigationBar from "./Header/NavigationBar";
 
 const leftNavigation = [
     {

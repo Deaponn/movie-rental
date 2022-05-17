@@ -31,7 +31,7 @@ const SwitchWrapper = styled.div`
     right: 8px;
 `;
 
-export default function MenuSmartphones({ isOpen, items, isDarkMode, toggleDarkMode }) {
+export default function MenuSmartphones({ isOpen, items, isDarkMode, toggleDarkMode, onNavigate }) {
     const { height, backgroundHeight, backgroundColor } = useSpring({
         height: isOpen ? items.length * 50 + "px" : "0px",
         backgroundHeight: isOpen ? "100vh" : "0vh",
@@ -42,7 +42,7 @@ export default function MenuSmartphones({ isOpen, items, isDarkMode, toggleDarkM
         <>
             <Menu style={{ height }}>
                 {items.map(({ title, route, type }, index) => {
-                    return <NavigationItem key={index} title={title} route={route} isOpen={isOpen} order={index + 1} type={type} />;
+                    return <NavigationItem key={index} title={title} route={route} isOpen={isOpen} order={index + 1} type={type} onNavigate={onNavigate} />;
                 })}
                 <SwitchWrapper>
                     <Switch isOn={isDarkMode} toggleDarkMode={toggleDarkMode} />

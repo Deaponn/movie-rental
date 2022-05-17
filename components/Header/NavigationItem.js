@@ -51,7 +51,7 @@ const StyledLink = styled.div`
     height: 100%;
 `;
 
-export default function NavigationItem({ title, route, isOpen, order, type }) {
+export default function NavigationItem({ title, route, isOpen, order, type, onNavigate }) {
     const [isHovered, setIsHovered] = useState(false);
     const { translateX } = useSpring({
         translateX: isHovered ? "-50%" : (isOpen ? "-50%" : "0"),
@@ -66,6 +66,7 @@ export default function NavigationItem({ title, route, isOpen, order, type }) {
             onMouseLeave={() => {
                 setIsHovered(false);
             }}
+            onClick={onNavigate ? onNavigate : null}
         >
             <Background order={order} style={{ translateX }} />
             <InnerWrapper>
