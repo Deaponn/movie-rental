@@ -4,6 +4,7 @@ import { useState } from "react";
 import Header from "../components/Header";
 import { UserProvider } from "@auth0/nextjs-auth0";
 import { light, dark } from "../constants/themes"
+import Footer from "../components/Footer";
 
 const GlobalStyle = createGlobalStyle`
     * {
@@ -37,6 +38,7 @@ export default function App({ Component, pageProps }) {
                         isDarkMode={isDarkMode}
                     />
                     <Component {...pageProps} />
+                    <Footer />
                 </ThemeProvider>
             </UserProvider>
         </>

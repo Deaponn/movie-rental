@@ -14,6 +14,7 @@ const dark = {
         first: "#191923",
         second: "#231942",
         third: "#140D4F",
+        fourth: "#191923",
     },
 };
 

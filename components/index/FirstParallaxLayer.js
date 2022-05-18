@@ -102,7 +102,7 @@ export default function FirstParallaxLayer() {
         <>
             <StyledParallaxLayer offset={0} speed={1}>
                 {welcomeMessageIn((styles) => (
-                    <WelcomeMessage style={styles}>Wish to rent some movies?</WelcomeMessage>
+                    <WelcomeMessage style={styles}>Wish to watch some movies?</WelcomeMessage>
                 ))}
             </StyledParallaxLayer>
             <StyledParallaxLayer offset={0} speed={1.5}>

@@ -4,6 +4,7 @@ import Hamburger from "./Hamburger";
 import MenuSmartphones from "./MenuSmartphones";
 import NavigationItem from "./NavigationItem";
 import Switch from "./Switch";
+import icon from "../../public/ui/icon.png";
 import { device } from "../../constants/breakpoints";
 import { useState } from "react";
 
@@ -109,7 +110,7 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
         <>
             <MobileContainer>
                 <MobileImage>
-                    <Image src="/ui/icon.png" alt="Logo" width={100} height={70} />
+                    <Image src={icon} alt="Logo" width={100} height={70} placeholder="blur" />
                 </MobileImage>
                 <Text>Rent movies</Text>
                 <Hamburger
@@ -134,7 +135,7 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
                         <NavigationItem key={index} title={title} route={route} type={type} />
                     ))}
                 </LeftNavBar>
-                <Image src="/ui/icon.png" alt="Logo" width={150} height={100} />
+                <Image src={icon} alt="Logo" width={150} height={100} placeholder="blur" />
                 <RightNavBar elements={rightNavigationItems.length}>
                     {rightNavigationItems.map(({ title, route, type }, index) => (
                         <NavigationItem
