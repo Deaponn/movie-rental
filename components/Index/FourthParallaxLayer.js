@@ -25,16 +25,16 @@ const ImageWrapper = styled.div`
 export default function FourthParallaxLayer({}) {
     return (
         <>
-            <StyledParallaxLayer offset={1.15} speed={0.7}>
+            <StyledParallaxLayer offset={1.18} speed={0.7}>
                 share on social media
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.4} speed={0.8}>
+            <StyledParallaxLayer offset={1.43} speed={0.8}>
                 tell your friends
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.7} speed={0.9}>
+            <StyledParallaxLayer offset={1.73} speed={0.9}>
                 enjoy!
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.7} speed={1.1}>
+            <StyledParallaxLayer offset={1.73} speed={1.1}>
                 <ImageWrapper>
                     <Image width={343} height={317} src={glassesEmoji} alt="swag-glasses-emoji" placeholder="blur" />
                 </ImageWrapper>

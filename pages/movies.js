@@ -8,6 +8,7 @@ const UnloggedInfo = styled.div`
     align-items: space-evenly;
     width: 100%;
     height: 100px;
+    background-color: red;
 `;
 
 export default function Movies({}) {

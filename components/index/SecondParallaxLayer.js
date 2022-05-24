@@ -13,10 +13,10 @@ const StyledParallaxLayer = styled(ParallaxLayer)`
     font-size: 48px;
 `;
 
-export default function SecondParallaxLayer({}) {
+export default function SecondParallaxLayer() {
     return (
         <>
-            <StyledParallaxLayer offset={0.6} speed={0.5}>
+            <StyledParallaxLayer offset={0.6} speed={0.5} style={{zIndex: 2}}>
                 <NavigationItem title="Login" route="/api/auth/login" type="auth0" />
             </StyledParallaxLayer>
             <StyledParallaxLayer offset={0.95} speed={0.9}>

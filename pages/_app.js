@@ -1,9 +1,10 @@
-import { createGlobalStyle, ThemeProvider } from "styled-components";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import Header from "../components/Header";
 import { UserProvider } from "@auth0/nextjs-auth0";
-import { light, dark } from "../constants/themes"
+import { light, dark } from "../constants/themes";
 import Footer from "../components/Footer";
 
 const GlobalStyle = createGlobalStyle`
@@ -20,8 +21,13 @@ const GlobalStyle = createGlobalStyle`
     }
 `;
 
+const Wrapper = styled.div`
+    ${({ noStyle }) => (noStyle ? "" : "height:100vh; overflow: auto;")}
+`;
+
 export default function App({ Component, pageProps }) {
     const [isDarkMode, setIsDarkMode] = useState(true);
+    const { pathname } = useRouter();
 
     return (
         <>
@@ -31,14 +37,16 @@ export default function App({ Component, pageProps }) {
             </Head>
             <UserProvider>
                 <ThemeProvider theme={isDarkMode ? dark : light}>
-                    <Header
-                        toggleDarkMode={() => {
-                            setIsDarkMode(!isDarkMode);
-                        }}
-                        isDarkMode={isDarkMode}
-                    />
-                    <Component {...pageProps} />
-                    <Footer />
+                    <Wrapper noStyle={pathname === "/"}>
+                        <Header
+                            toggleDarkMode={() => {
+                                setIsDarkMode(!isDarkMode);
+                            }}
+                            isDarkMode={isDarkMode}
+                        />
+                        <Component {...pageProps} />
+                        {pathname !== "/" && <Footer />}
+                    </Wrapper>
                 </ThemeProvider>
             </UserProvider>
         </>

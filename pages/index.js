@@ -15,7 +15,7 @@ const StyledParallax = styled(Parallax)`
 
 const Background = styled.div`
     background-color: ${({ theme, which }) => theme.panels[which]};
-    height: 100vh;
+    height: ${() => window.innerHeight}px;
 `;
 
 export default function Home() {
@@ -25,11 +25,12 @@ export default function Home() {
                 <title>Movie shop</title>
             </Head>
             <StyledParallax pages={3}>
-                <ParallaxLayer speed={1} factor={2}>
+                <ParallaxLayer speed={1} factor={3}>
                     <Background which="first" />
                     <Background which="second" />
                     <Background which="third" />
                     <Background which="fourth" />
+                    <Footer mainSite />
                 </ParallaxLayer>
                 <FirstParallaxLayer />
                 <SecondParallaxLayer />
