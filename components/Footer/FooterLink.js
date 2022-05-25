@@ -11,6 +11,8 @@ const Wrapper = styled.div`
 `;
 
 const A = styled.a`
+    display: flex;
+    align-items: center;
     font-family: Lato, sans-serif;
     margin: 0;
     width: 90%;
@@ -19,8 +21,8 @@ const A = styled.a`
     color: ${({ theme }) => theme.font.primary};
 `;
 
-export default function FooterLink({ href, title, auth }) {
-    if (auth) return <A href={href}>{title}</A>
+export default function FooterLink({ href, title, external, children }) {
+    if (external) return <A href={href}>{title ? title : children}</A>
 
     return (
         <Link href={href} passHref>
