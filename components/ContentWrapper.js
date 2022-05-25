@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { device } from "../constants/breakpoints";
 
 const Wrapper = styled.div`
-    width: 100vw;
+    width: calc(100vw - (100vw - 100%));
     padding-top: 84px;
     overflow: auto;
 
@@ -11,6 +11,6 @@ const Wrapper = styled.div`
     }
 `;
 
-export default function ContentWrapper({ children }){
-    return <Wrapper>{children}</Wrapper>
+export default function ContentWrapper({ children }) {
+    return <Wrapper>{children}</Wrapper>;
 }

@@ -10,20 +10,32 @@ import linkedinIcon from "../public/gfx/linkedin-icon.png";
 
 const Wrapper = styled.div`
     display: flex;
-    padding-top: 84px;
-    width: 100vw;
+    justify-content: space-evenly;
+    padding-top: 56px;
+    border-top: 3px solid ${({theme}) => theme.accent.first};
+    width: calc(100vw - (100vw - 100%));
     height: ${({ mainSite }) => (mainSite ? window.innerHeight : 500)}px;
     background-color: ${({ theme }) => theme.primary};
 
     @media ${device.tablet} {
-        padding-top: 56px;
+        padding-top: 0px;
         height: calc(100vh - 56px);
         flex-direction: column;
+    }
+
+    @media ${device.smartphoneBig} {
+        height: 100vh;
     }
 `;
 
 const FooterGroup = styled.div`
     padding: 10px;
+    height: 380px;
+    width: 25vw;
+
+    @media ${device.laptop} {
+        width: 30vw;
+    }
 
     @media ${device.tablet} {
         width: 80%;
@@ -33,7 +45,7 @@ const FooterGroup = styled.div`
 
 const Links = styled(FooterGroup)`
     @media ${device.tablet} {
-        height: 230px;
+        height: 210px;
     }
 `;
 
@@ -43,7 +55,7 @@ const SocialMedia = styled(FooterGroup)`
     justify-content: flex-start;
 
     @media ${device.tablet} {
-        height: 290px;
+        height: 270px;
     }
 
     & > a {
@@ -57,7 +69,7 @@ const SocialMedia = styled(FooterGroup)`
 
 const Info = styled(FooterGroup)`
     @media ${device.tablet} {
-        height: 10vh;
+        height: 100px;
     }
 `;
 
@@ -75,6 +87,10 @@ const Text = styled.div`
     width: 90%;
     font-size: 24px;
     color: ${({ theme }) => theme.font.primary};
+
+    @media ${device.laptop} {
+        font-size: 20px;
+    }
 `;
 
 export default function Footer({ mainSite }) {
