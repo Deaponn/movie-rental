@@ -22,15 +22,10 @@ const Wrapper = styled.div`
         height: calc(100vh - 56px);
         flex-direction: column;
     }
-
-    @media ${device.smartphoneBig} {
-        height: 100vh;
-    }
 `;
 
 const FooterGroup = styled.div`
     padding: 10px;
-    height: 380px;
     width: 25vw;
 
     @media ${device.laptop} {
@@ -41,11 +36,9 @@ const FooterGroup = styled.div`
         width: 80%;
         margin: 0 auto;
     }
-`;
 
-const Links = styled(FooterGroup)`
-    @media ${device.tablet} {
-        height: 210px;
+    @media ${device.smartphoneBig} {
+        padding: 3px;
     }
 `;
 
@@ -64,12 +57,6 @@ const SocialMedia = styled(FooterGroup)`
 
     & > a > div {
         margin-left: 10px;
-    }
-`;
-
-const Info = styled(FooterGroup)`
-    @media ${device.tablet} {
-        height: 100px;
     }
 `;
 
@@ -95,53 +82,53 @@ const Text = styled.div`
 
 export default function Footer({ mainSite }) {
     const { user, error, isLoading } = useUser();
-    const userNotLogged = isLoading || !user;
+    const isNotLogged = isLoading || !user;
 
     if (error) return <div>an error occured while retrieving login information: {error}</div>;
 
     return (
         <Wrapper mainSite={mainSite}>
-            <Links>
+            <FooterGroup>
                 <Title>Menu</Title>
                 <FooterLink title="Home" href="/" />
                 <FooterLink title="Watch" href="/movies" />
                 <FooterLink title="About" href="/about" />
-                {userNotLogged && (
+                {isNotLogged && (
                     <>
                         <FooterLink title="Login" href="/api/auth/login" external />
                     </>
                 )}
-                {!userNotLogged && (
+                {!isNotLogged && (
                     <>
                         <FooterLink title="Account" href="/account" />
                         <FooterLink title="Logout" href="/api/auth/logout" external />
                     </>
                 )}
-            </Links>
+            </FooterGroup>
             <SocialMedia>
                 <Title>Social media</Title>
                 <FooterLink href="https://www.facebook.com/" external>
-                    <Image src={fbIcon} alt="fb" height={50} width={50} />
+                    <Image src={fbIcon} alt="fb" height={40} width={40} />
                     <div>Facebook</div>
                 </FooterLink>
                 <FooterLink href="https://www.instagram.com/" external>
-                    <Image src={instagramIcon} alt="instagram" height={50} width={50} />
+                    <Image src={instagramIcon} alt="instagram" height={40} width={40} />
                     <div>Instagram</div>
                 </FooterLink>
                 <FooterLink href="https://github.com/Deaponn/" external>
-                    <Image src={githubIcon} alt="github" height={50} width={50} />
+                    <Image src={githubIcon} alt="github" height={40} width={40} />
                     <div>Github</div>
                 </FooterLink>
                 <FooterLink href="https://www.linkedin.com/in/bartosz-sajecki-161a961b8/" external>
-                    <Image src={linkedinIcon} alt="linkedin" height={50} width={50} />
+                    <Image src={linkedinIcon} alt="linkedin" height={40} width={40} />
                     <div>Linkedin</div>
                 </FooterLink>
             </SocialMedia>
-            <Info>
+            <FooterGroup>
                 <Title>Info</Title>
                 <Text>Author: Bartosz Sajecki</Text>
                 <Text>© 2022</Text>
-            </Info>
+            </FooterGroup>
         </Wrapper>
     );
 }
