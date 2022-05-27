@@ -1,12 +1,25 @@
-import styled from "styled-components"
-import Image from "next/image"
-import { device } from "../../constants/breakpoints"
-import { IMAGES_URL } from "../../constants/apiConnection"
+import styled from "styled-components";
+import Image from "next/image";
+import NavigationItem from "../Header/NavigationItem";
+import { device } from "../../constants/breakpoints";
+import { IMAGES_URL } from "../../constants/apiConnection";
 
 const Wrapper = styled.div`
+    width: 426px;
+    margin: 30px 30px 0;
+
     @media ${device.tablet} {
         width: min(80%, 426px);
         margin: 30px auto 0;
+    }
+`;
+
+const ImageWrapper = styled.div`
+    position: relative;
+
+    & > div {
+        position: absolute;
+        transform: translate(6px, -48px);
     }
 `
 
@@ -14,28 +27,34 @@ const Info = styled.div`
     display: flex;
     flex-direction: column;
     align-self: flex-start;
-`
+`;
 
 const Text = styled.div`
     font-family: Lato, sans-serif;
     font-size: 32px;
     color: ${({ theme }) => theme.font.primary};
-`
+`;
 
 const SmallerText = styled(Text)`
     font-size: 24px;
-`
+`;
 
-export default function Tile({ movie }){
-    const {title, poster_path, release_date, vote_average} = movie
-    const posterSrc = `${IMAGES_URL}${poster_path}`
+export default function Tile({ movie, logged }) {
+    const { title, poster_path, release_date, vote_average } = movie;
+    const posterSrc = `${IMAGES_URL}${poster_path}`;
+    const rentButtonText = logged ? "Details" : "Login first"
 
-    return <Wrapper>
-        <Image src={posterSrc} width={426} height={639} alt="poster"></Image>
-        <Info>
-            <Text>{title}</Text>
-            <SmallerText>Release: {release_date}</SmallerText>
-            <SmallerText>Rating: {vote_average}</SmallerText>
-        </Info>
-    </Wrapper>
+    return (
+        <Wrapper>
+            <ImageWrapper>
+                <Image src={posterSrc} width={426} height={639} alt="poster" />
+                <NavigationItem title={rentButtonText} route="dubaduba" wider={!logged} />
+            </ImageWrapper>
+            <Info>
+                <Text>{title}</Text>
+                <SmallerText>Release: {release_date}</SmallerText>
+                <SmallerText>Rating: {vote_average}</SmallerText>
+            </Info>
+        </Wrapper>
+    );
 }

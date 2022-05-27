@@ -4,7 +4,10 @@ import { device } from "../../constants/breakpoints"
 
 const Wrapper = styled.div`
     display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
     background-color: ${({theme}) => theme.secondary};
+    padding-bottom: 30px;
 
     @media ${device.tablet}{
         flex-direction: column;
@@ -12,8 +15,8 @@ const Wrapper = styled.div`
     }
 `
 
-export default function Showcase({ movies }) {
+export default function Showcase({ movies, logged }) {
     return <Wrapper>
-        {movies.results.map(movie => <Tile key={movie.id} movie={movie} />)}
+        {movies.results.map(movie => <Tile key={movie.id} movie={movie} logged={logged} />)}
     </Wrapper>
 }

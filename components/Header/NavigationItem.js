@@ -8,7 +8,7 @@ const A = styled.a`
 `;
 
 const OuterWrapper = styled.div`
-    width: 120px;
+    width: ${({wider}) => wider ? "150px" : "120px"};
     height: 40px;
     text-align: center;
     display: grid;
@@ -25,16 +25,16 @@ const Background = styled(animated.div)`
     background-image: linear-gradient(45deg, ${({ theme }) => theme.accent.third}, ${({ theme }) => theme.accent.first}, ${({ theme }) => theme.accent.third});
     width: 200%;
     height: 100%;
-    z-index: -1;
 `;
 
 const InnerWrapper = styled.div`
     grid-column: 1;
     grid-row: 1;
-    width: 112px;
+    width: ${({wider}) => wider ? "140px" : "112px"};
     height: 34px;
     background-color: ${({ theme }) => theme.primary};
     margin: auto;
+    z-index: 1;
 `;
 
 const StyledLink = styled.div`
@@ -51,7 +51,7 @@ const StyledLink = styled.div`
     height: 100%;
 `;
 
-export default function NavigationItem({ title, route, isOpen, order, type, onNavigate }) {
+export default function NavigationItem({ title, route, isOpen, order, type, onNavigate, wider }) {
     const [isHovered, setIsHovered] = useState(false);
     const { translateX } = useSpring({
         translateX: isHovered ? "-50%" : (isOpen ? "-50%" : "0"),
@@ -66,10 +66,10 @@ export default function NavigationItem({ title, route, isOpen, order, type, onNa
             onMouseLeave={() => {
                 setIsHovered(false);
             }}
-            onClick={onNavigate ? onNavigate : null}
+            onClick={onNavigate ? onNavigate : null} wider={wider}
         >
             <Background order={order} style={{ translateX }} />
-            <InnerWrapper>
+            <InnerWrapper wider={wider}>
                 <StyledLink>{title}</StyledLink>
             </InnerWrapper>
         </OuterWrapper>

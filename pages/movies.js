@@ -15,7 +15,7 @@ const UnloggedInfo = styled.div`
 `;
 
 export async function getStaticProps(){
-    const data = await fetch(`${NEXT_API_URL}/api/hello`)
+    const data = await fetch(`${NEXT_API_URL}/api/popular`)
     const movies = await data.json()
 
     return {
@@ -37,8 +37,7 @@ export default function Movies({ movies }) {
             <Head>
                 <title>Movies</title>
             </Head>
-            {isNotLogged && <UnloggedInfo>llllllllllllllllll</UnloggedInfo>}
-            {!isNotLogged && <Showcase movies={movies} />}
+            <Showcase movies={movies} logged={!isNotLogged} />
         </ContentWrapper>
     );
 }
