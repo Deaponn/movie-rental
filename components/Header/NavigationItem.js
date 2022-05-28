@@ -8,7 +8,7 @@ const A = styled.a`
 `;
 
 const OuterWrapper = styled.div`
-    width: ${({wider}) => wider ? "150px" : "120px"};
+    width: 120px;
     height: 40px;
     text-align: center;
     display: grid;
@@ -30,7 +30,7 @@ const Background = styled(animated.div)`
 const InnerWrapper = styled.div`
     grid-column: 1;
     grid-row: 1;
-    width: ${({wider}) => wider ? "140px" : "112px"};
+    width: 112px;
     height: 34px;
     background-color: ${({ theme }) => theme.primary};
     margin: auto;

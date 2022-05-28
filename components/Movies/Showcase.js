@@ -15,8 +15,8 @@ const Wrapper = styled.div`
     }
 `
 
-export default function Showcase({ movies, logged }) {
+export default function Showcase({ movies }) {
     return <Wrapper>
-        {movies.results.map(movie => <Tile key={movie.id} movie={movie} logged={logged} />)}
+        {movies.map(movie => <Tile key={movie.id} movie={movie} />)}
     </Wrapper>
 }

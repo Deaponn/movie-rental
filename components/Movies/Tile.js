@@ -39,17 +39,16 @@ const SmallerText = styled(Text)`
     font-size: 24px;
 `;
 
-export default function Tile({ movie, logged }) {
+export default function Tile({ movie }) {
     const { id, title, poster_path, release_date, vote_average } = movie;
     const posterSrc = `${IMAGES_URL}${poster_path}`;
-    const rentButtonText = logged ? "Details" : "Login first"
     const route = `/movie/${id}`
-
+    
     return (
         <Wrapper>
             <ImageWrapper>
                 <Image src={posterSrc} width={426} height={639} alt="poster" />
-                <NavigationItem title={rentButtonText} route={route} wider={!logged} />
+                <NavigationItem title="Details" route={route} />
             </ImageWrapper>
             <Info>
                 <Text>{title}</Text>
