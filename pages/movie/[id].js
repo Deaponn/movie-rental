@@ -1,22 +1,24 @@
 import styled from "styled-components";
 import ContentWrapper from "../../components/ContentWrapper";
 import Image from "next/image";
-import { IMAGES_URL } from "../../constants/apiConnection";
+import { BASE_URL, IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
 
 export async function getStaticProps({ params }) {
     const { id } = params;
-    const data = await fetch(`/api/movie/${id}`);
-    const movie = await data.json();
+    const QUERY_URL = `${BASE_URL}/movie/${id}?api_key=${process.env.TMDB_API_KEY}`;
+    const query = await fetch(QUERY_URL);
+    const movie = await query.json();
     return {
         props: { movie },
     };
 }
 
 export async function getStaticPaths() {
-    const data = await fetch("/api/popular");
-    const movies = await data.json();
-    const paths = movies.map(({ id }) => ({ params: { id: id.toString() } }));
+    const QUERY_URL = `${BASE_URL}/movie/popular?api_key=${process.env.TMDB_API_KEY}`
+    const query = await fetch(QUERY_URL)
+    const movies = await query.json()
+    const paths = movies.results.map(({ id }) => ({ params: { id: id.toString() } }));
 
     return {
         paths,
