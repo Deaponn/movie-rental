@@ -1,12 +1,12 @@
 import styled from "styled-components";
 import ContentWrapper from "../../components/ContentWrapper";
 import Image from "next/image";
-import { NEXT_API_URL, IMAGES_URL } from "../../constants/apiConnection";
+import { IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
 
 export async function getStaticProps({ params }) {
     const { id } = params;
-    const data = await fetch(`${NEXT_API_URL}/movie/${id}`);
+    const data = await fetch(`/api/movie/${id}`);
     const movie = await data.json();
     return {
         props: { movie },
@@ -14,7 +14,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-    const data = await fetch(`${NEXT_API_URL}/popular`);
+    const data = await fetch("/api/popular");
     const movies = await data.json();
     const paths = movies.map(({ id }) => ({ params: { id: id.toString() } }));
 
