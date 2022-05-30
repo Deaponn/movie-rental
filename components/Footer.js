@@ -48,7 +48,7 @@ const SocialMedia = styled(FooterGroup)`
     justify-content: flex-start;
 
     @media ${device.tablet} {
-        height: 270px;
+        height: 240px;
     }
 
     & > a {
@@ -66,6 +66,7 @@ const Title = styled.h2`
     width: 90%;
     color: ${({ theme }) => theme.font.primary};
     border-bottom: 5px solid ${({ theme }) => theme.font.primary};
+    font-size: 22px;
 `;
 
 const Text = styled.div`

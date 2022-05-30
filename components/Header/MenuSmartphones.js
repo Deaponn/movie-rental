@@ -48,7 +48,7 @@ export default function MenuSmartphones({ isOpen, items, isDarkMode, toggleDarkM
                     <Switch isOn={isDarkMode} toggleDarkMode={toggleDarkMode} />
                 </SwitchWrapper>
             </Menu>
-            <Background style={{ height: backgroundHeight, backgroundColor }} />
+            <Background style={{ height: backgroundHeight, backgroundColor }} onGotPointerCapture={onNavigate} />
         </>
     );
 }
