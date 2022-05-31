@@ -34,7 +34,7 @@ const InnerWrapper = styled.div`
     height: 34px;
     background-color: ${({ theme }) => theme.primary};
     margin: auto;
-    z-index: 1;
+    z-index: ${({header}) => header ? 1 : 0};
 `;
 
 const StyledLink = styled.div`
@@ -51,14 +51,14 @@ const StyledLink = styled.div`
     height: 100%;
 `;
 
-export default function NavigationItem({ title, route, isOpen, order, type, onNavigate, wider }) {
+export function Content({ title, isOpen, order, onNavigate }) {
     const [isHovered, setIsHovered] = useState(false);
     const { translateX } = useSpring({
-        translateX: isHovered ? "-50%" : (isOpen ? "-50%" : "0"),
-        delay: order ? order * 100 + 0.2 : 0
+        translateX: isHovered ? "-50%" : isOpen ? "-50%" : "0",
+        delay: order ? order * 100 + 0.2 : 0,
     });
 
-    const contents = (
+    return (
         <OuterWrapper
             onMouseEnter={() => {
                 setIsHovered(true);
@@ -66,20 +66,29 @@ export default function NavigationItem({ title, route, isOpen, order, type, onNa
             onMouseLeave={() => {
                 setIsHovered(false);
             }}
-            onClick={onNavigate ? onNavigate : null} wider={wider}
+            onClick={onNavigate ? onNavigate : null}
         >
             <Background order={order} style={{ translateX }} />
-            <InnerWrapper wider={wider}>
+            <InnerWrapper>
                 <StyledLink>{title}</StyledLink>
             </InnerWrapper>
         </OuterWrapper>
     );
+}
 
-    if (type == "auth0") return <A href={route}>{contents}</A>;
+export default function NavigationItem({ title, route, isOpen, order, type, onNavigate, header }) {
+    if (type === "auth0")
+        return (
+            <A href={route}>
+                <Content title={title} isOpen={isOpen} order={order} onNavigate={onNavigate} header={header} />
+            </A>
+        );
 
     return (
         <Link href={route} passHref>
-            {contents}
+            <A>
+                <Content title={title} isOpen={isOpen} order={order} onNavigate={onNavigate} header={header} />
+            </A>
         </Link>
     );
 }

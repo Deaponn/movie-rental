@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import NavigationItem from "../Header/NavigationItem";
+import NavigationItem from "../NavigationItem";
 import { ParallaxLayer } from "@react-spring/parallax";
 
 const StyledParallaxLayer = styled(ParallaxLayer)`

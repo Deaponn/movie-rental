@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import Image from "next/image";
-import NavigationItem from "../Header/NavigationItem";
+import NavigationItem from "../NavigationItem";
 import { device } from "../../constants/breakpoints";
 import { IMAGES_URL } from "../../constants/apiConnection";
 

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import Hamburger from "./Hamburger";
 import MenuSmartphones from "./MenuSmartphones";
-import NavigationItem from "./NavigationItem";
+import NavigationItem from "../NavigationItem";
 import Switch from "./Switch";
 import icon from "../../public/ui/icon.png";
 import { device } from "../../constants/breakpoints";
@@ -121,7 +121,7 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
                 />
                 <MenuSmartphones
                     onNavigate={() => {
-                        setHamburgerIsOpen(false)
+                        setHamburgerIsOpen(false);
                     }}
                     isOpen={hamburgerIsOpen}
                     items={[...leftNavigationItems, ...rightNavigationItems]}
@@ -138,12 +138,7 @@ export default function NavigationBar({ leftNavigationItems, rightNavigationItem
                 <Image src={icon} alt="Logo" width={150} height={100} placeholder="blur" />
                 <RightNavBar elements={rightNavigationItems.length}>
                     {rightNavigationItems.map(({ title, route, type }, index) => (
-                        <NavigationItem
-                            key={index}
-                            title={title}
-                            route={route}
-                            type={type}
-                        />
+                        <NavigationItem key={index} title={title} route={route} type={type} header />
                     ))}
                 </RightNavBar>
                 <SwitchContainer>

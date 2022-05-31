@@ -4,7 +4,7 @@ export default withApiAuthRequired(async function shows(req, res) {
     try {
         switch(req.method){
             case "GET": {
-                res.status(200).json({ success: true, method: req.method });
+                res.status(200).json({ success: true, method: req.method, query: req.query });
                 return
             }
             case "POST": {

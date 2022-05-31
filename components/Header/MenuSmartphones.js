@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import NavigationItem from "./NavigationItem";
+import NavigationItem from "../NavigationItem";
 import Switch from "./Switch";
 import { useSpring, animated } from "@react-spring/web";
 
@@ -35,14 +35,16 @@ export default function MenuSmartphones({ isOpen, items, isDarkMode, toggleDarkM
     const { height, backgroundHeight, backgroundColor } = useSpring({
         height: isOpen ? items.length * 50 + "px" : "0px",
         backgroundHeight: isOpen ? "100vh" : "0vh",
-        backgroundColor: isOpen ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0)"
+        backgroundColor: isOpen ? "rgba(0, 0, 0, 0.3)" : "rgba(0, 0, 0, 0)",
     });
 
     return (
         <>
             <Menu style={{ height }}>
                 {items.map(({ title, route, type }, index) => {
-                    return <NavigationItem key={index} title={title} route={route} isOpen={isOpen} order={index + 1} type={type} onNavigate={onNavigate} />;
+                    return (
+                        <NavigationItem key={index} title={title} route={route} isOpen={isOpen} order={index + 1} type={type} onNavigate={onNavigate} header />
+                    );
                 })}
                 <SwitchWrapper>
                     <Switch isOn={isDarkMode} toggleDarkMode={toggleDarkMode} />
