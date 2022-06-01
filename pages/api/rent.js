@@ -1,23 +1,32 @@
 import { withApiAuthRequired } from "@auth0/nextjs-auth0";
+import executeQuery from "../../lib/databaseConnection";
 
 export default withApiAuthRequired(async function shows(req, res) {
     try {
-        switch(req.method){
+        switch (req.method) {
             case "GET": {
-                res.status(200).json({ success: true, method: req.method, query: req.query });
-                return
+                const result = await executeQuery({
+                    query: "SELECT * FROM movies"
+                })
+                res.status(200).json({ success: true, result });
+                return;
             }
             case "POST": {
-                res.status(200).json({ success: true, method: req.method, body: req.body });
-                return
+                const {movie_id, user_id, title} = JSON.parse(req.body)
+                const result = await executeQuery({
+                    query: "INSERT INTO movies(`movie_id`, `user_id`, `title`, `date`) VALUES(?, ?, ?, ?)",
+                    argument: [movie_id, user_id, title, "dzisiaj"]
+                })
+                res.status(200).json({ success: true, result });
+                return;
             }
             case "DELETE": {
                 res.status(200).json({ success: true, method: req.method, body: req.body });
-                return
+                return;
             }
             default: {
                 res.status(200).json({ success: false, method: req.method, message: "unsupported HTTP method" });
-                return
+                return;
             }
         }
     } catch (error) {

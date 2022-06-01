@@ -5,6 +5,7 @@ import useSendRequest from "../../lib/useSendRequest";
 import { BASE_URL, IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
 import ActionButton from "../../components/ActionButton";
+import { useUser } from "@auth0/nextjs-auth0";
 
 export async function getStaticProps({ params }) {
     const { id } = params;
@@ -68,9 +69,11 @@ const SmallerText = styled(Text)`
 `;
 
 export default function Movie({ movie }) {
+    const { user } = useUser();
     const { id, title, release_date, vote_average, vote_count, poster_path, overview, genres } = movie;
     const posterSrc = `${IMAGES_URL}${poster_path}`;
-    const fireRequest = useSendRequest("/api/rent", "POST", id)
+    const { sub } = user ? user : { sub: null }
+    const rentMovie = useSendRequest("/api/rent", "POST", JSON.stringify({ movie_id: id, user_id: sub, title }));
 
     return (
         <ContentWrapper>
@@ -85,7 +88,7 @@ export default function Movie({ movie }) {
                 <SmallerText>
                     Rating: {vote_average} / {vote_count} votes
                 </SmallerText>
-                <ActionButton />
+                <ActionButton action={rentMovie} />
             </Container>
         </ContentWrapper>
     );

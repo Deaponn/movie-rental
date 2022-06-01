@@ -1,11 +1,11 @@
-import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import Header from "../components/Header";
-import { UserProvider } from "@auth0/nextjs-auth0";
-import { light, dark } from "../constants/themes";
 import Footer from "../components/Footer";
+import Head from "next/head";
+import Header from "../components/Header";
+import styled, { createGlobalStyle, ThemeProvider } from "styled-components";
+import { light, dark } from "../constants/themes";
+import { useRouter } from "next/router";
+import { UserProvider } from "@auth0/nextjs-auth0";
+import { useState } from "react";
 
 const GlobalStyle = createGlobalStyle`
     * {
