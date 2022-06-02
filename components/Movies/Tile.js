@@ -17,7 +17,7 @@ const Wrapper = styled.div`
 const ImageWrapper = styled.div`
     position: relative;
 
-    & > div {
+    & > a > div {
         position: absolute;
         transform: translate(6px, -48px);
     }

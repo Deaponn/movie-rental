@@ -2,28 +2,108 @@ import styled from "styled-components";
 import ContentWrapper from "../components/ContentWrapper";
 import { useUser } from "@auth0/nextjs-auth0";
 import useSWR from "swr";
+import Image from "next/image";
+import profilePic from "../public/gfx/profile-pic.png";
+import { device } from "../constants/breakpoints";
+import ActionButton from "../components/ActionButton";
 
 const fetcher = (url, method, argument) => fetch(url, { method, body: argument }).then((res) => res.json());
 
-const Profile = styled.div`
-    height: calc(100vh - 150px);
+const Wrapper = styled.div`
     background-color: ${({ theme }) => theme.secondary};
+    padding-top: 30px;
+`;
+
+const Profile = styled.div`
+    @media ${device.tablet} {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: auto;
+        width: min(80%, 426px);
+    }
+`;
+
+const Text = styled.div`
+    font-family: Lato, sans-serif;
+    font-size: 28px;
+    text-align: center;
+    width: 90%;
+    color: ${({ theme }) => theme.font.primary};
+`;
+
+const Details = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+`;
+
+const MovieText = styled(Text)`
+    font-size: 26px;
+    text-align: unset;
+`;
+
+const Movies = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const Movie = styled.div`
+    display: flex;
+    border: 3px solid black;
+
+    @media ${device.tablet} {
+        width: min(90%, 475px);
+    }
 `;
 
 export default function Account({}) {
-    const { user: {name, sub} = {}, error: userError, isLoading } = useUser();
-    const { data, error: fetchError } = useSWR(sub ? `/api/rent?user_id=${sub}` : null, fetcher);
+    const { user: { name, sub } = {}, error: userError, isLoading } = useUser();
+    const { data, error: fetchError, mutate } = useSWR(sub ? `/api/rent?user_id=${sub}` : null, fetcher);
+    const returnMovie = async (movieId) => {
+        fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movieId }) });
+        const newList = data.result.filter((movie) => movie.id !== movieId);
+        console.log(newList);
+        mutate({ ...data, result: newList });
+    };
 
-    if (isLoading) return <ContentWrapper>skeleton loader</ContentWrapper>;
     if (userError) return <ContentWrapper>{JSON.stringify(userError)}</ContentWrapper>;
+    if (fetchError) return <ContentWrapper>{JSON.stringify(fetchError)}</ContentWrapper>;
     if (!sub) return <ContentWrapper>access denied</ContentWrapper>;
+
+    console.log(data)
 
     return (
         <ContentWrapper>
-            <Profile>
-                Your account information: {name}, {sub}
-            </Profile>
-            <Profile>Filmy: {data ? JSON.stringify(data.result) : null}</Profile>
+            <Wrapper>
+                <Profile>
+                    <Image src={profilePic} placeholder="blur" alt="profile picture" />
+                    <Text>Logged in as: {isLoading ? "loading..." : name}</Text>
+                </Profile>
+                <Movies>
+                    <Text>Movies you have rented:</Text>
+                    {!data ? (
+                        <Text>Loading movie list...</Text>
+                    ) : (
+                        data.result.map(({ id, title, date, movie_id }) => (
+                            <Movie key={id}>
+                                <Details>
+                                    <MovieText>{title}</MovieText>
+                                    <MovieText>{date}</MovieText>
+                                </Details>
+                                <ActionButton
+                                    action={() => {
+                                        returnMovie(movie_id);
+                                    }}
+                                    title={"Return"}
+                                />
+                            </Movie>
+                        ))
+                    )}
+                </Movies>
+            </Wrapper>
         </ContentWrapper>
     );
 }

@@ -24,21 +24,22 @@ export default withApiAuthRequired(async function shows(req, res) {
                 return;
             }
             case "POST": {
-                const { movie_id, title } = JSON.parse(req.body);
-                if (!movie_id || !title) return res.status(401).json({ success: false, message: "Invalid request" });
+                const { movieId, title } = JSON.parse(req.body);
+                if (!movieId || !title) return res.status(401).json({ success: false, message: "Invalid request" });
                 await executeQuery({
                     query: "INSERT INTO movies(`movie_id`, `user_id`, `title`, `date`) VALUES(?, ?, ?, ?)",
-                    argument: [movie_id, userId, title, new Date().toLocaleString()],
+                    argument: [movieId, userId, title, new Date().toLocaleString("pl")],
                 });
                 res.status(200).json({ success: true });
                 return;
             }
             case "DELETE": {
-                const { movie_id } = JSON.parse(req.body);
-                if (!movie_id) return res.status(401).json({ success: false, message: "Invalid request" });
+                const { movieId } = JSON.parse(req.body);
+                if (!movieId) return res.status(401).json({ success: false, message: "Invalid request" });
+                console.log(movieId)
                 await executeQuery({
-                    query: `DELETE FROM movies WHERE movie_id=?`,
-                    argument: [movie_id],
+                    query: `DELETE FROM movies WHERE movie_id=? AND user_id=?`,
+                    argument: [movieId, userId],
                 });
                 res.status(200).json({ success: true });
                 return;

@@ -10,4 +10,3 @@
 - integration with TMDB RESTful api
 - deployment on Vercel
 - SWR (for API calls)
-- more coming soon

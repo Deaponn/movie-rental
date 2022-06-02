@@ -78,11 +78,11 @@ export default function Movie({ movie }) {
     const posterSrc = `${IMAGES_URL}${poster_path}`;
     const { data, error, mutate } = useSWR(`/api/rent?check=${id}`, fetcher, { refreshInterval: 250 });
     const rentMovie = async () => {
-        fetch("/api/rent", { method: "POST", body: JSON.stringify({ movie_id: id, title }) });
+        fetch("/api/rent", { method: "POST", body: JSON.stringify({ movieId: id, title }) });
         mutate({ isRented: true });
     };
     const returnMovie = async () => {
-        fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movie_id: id }) });
+        fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movieId: id }) });
         mutate({ isRented: false });
     };
 
