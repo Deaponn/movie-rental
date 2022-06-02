@@ -1,11 +1,12 @@
 import ContentWrapper from "../../components/ContentWrapper";
 import styled from "styled-components";
 import Image from "next/image";
-import useSendRequest from "../../lib/useSendRequest";
+import ActionButton from "../../components/ActionButton";
+import useSWR from "swr";
 import { BASE_URL, IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
-import ActionButton from "../../components/ActionButton";
-import { useUser } from "@auth0/nextjs-auth0";
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
 export async function getStaticProps({ params }) {
     const { id } = params;
@@ -40,6 +41,10 @@ const Container = styled.div`
         flex-direction: column;
         align-items: center;
     }
+
+    & > div:last-child {
+        margin-top: 15px;
+    }
 `;
 
 const ImageWrapper = styled.div`
@@ -69,11 +74,17 @@ const SmallerText = styled(Text)`
 `;
 
 export default function Movie({ movie }) {
-    const { user } = useUser();
     const { id, title, release_date, vote_average, vote_count, poster_path, overview, genres } = movie;
     const posterSrc = `${IMAGES_URL}${poster_path}`;
-    const { sub } = user ? user : { sub: null }
-    const rentMovie = useSendRequest("/api/rent", "POST", JSON.stringify({ movie_id: id, user_id: sub, title }));
+    const { data, error, mutate } = useSWR(`/api/rent?check=${id}`, fetcher, { refreshInterval: 250 });
+    const rentMovie = async () => {
+        fetch("/api/rent", { method: "POST", body: JSON.stringify({ movie_id: id, title }) });
+        mutate({ isRented: true });
+    };
+    const returnMovie = async () => {
+        fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movie_id: id }) });
+        mutate({ isRented: false });
+    };
 
     return (
         <ContentWrapper>
@@ -88,7 +99,10 @@ export default function Movie({ movie }) {
                 <SmallerText>
                     Rating: {vote_average} / {vote_count} votes
                 </SmallerText>
-                <ActionButton action={rentMovie} />
+                <ActionButton
+                    action={data ? (data.isRented ? returnMovie : rentMovie) : () => {}}
+                    title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
+                />
             </Container>
         </ContentWrapper>
     );

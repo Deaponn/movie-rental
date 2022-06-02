@@ -1,5 +1,5 @@
 import { Content } from "./NavigationItem";
 
-export default function ActionButton({action}) {
-    return <Content title="action" onNavigate={() => action()} />;
+export default function ActionButton({action, title}) {
+    return <Content title={title} onNavigate={() => action()} />;
 }
