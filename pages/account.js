@@ -41,6 +41,18 @@ const Movie = styled.div`
     }
 `;
 
+const ErrorWrapper = styled.div`
+    height: calc(100vh - 300px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: ${({big}) => big ? "68px" : "unset"};
+    font-family: Lucida Console;
+    background-color: lightcoral;
+    color: firebrick;
+    text-align: center;
+`;
+
 export default function Account({}) {
     const { user: { name, sub } = {}, error: userError, isLoading } = useUser();
     const { data, error: fetchError, mutate } = useSWR(sub ? `/api/rent?user_id=${sub}` : null, fetcher);
@@ -51,9 +63,24 @@ export default function Account({}) {
         mutate({ ...data, result: newList });
     };
 
-    if (userError) return <ContentWrapper>{JSON.stringify(userError)}</ContentWrapper>;
-    if (fetchError) return <ContentWrapper>{JSON.stringify(fetchError)}</ContentWrapper>;
-    if (!sub) return <ContentWrapper>access denied</ContentWrapper>;
+    if (userError)
+        return (
+            <ContentWrapper>
+                <ErrorWrapper>{JSON.stringify(userError)}</ErrorWrapper>
+            </ContentWrapper>
+        );
+    if (fetchError)
+        return (
+            <ContentWrapper>
+                <ErrorWrapper>{JSON.stringify(fetchError)}</ErrorWrapper>
+            </ContentWrapper>
+        );
+    if (!sub)
+        return (
+            <ContentWrapper>
+                <ErrorWrapper big>access denied</ErrorWrapper>
+            </ContentWrapper>
+        );
 
     return (
         <ContentWrapper>
