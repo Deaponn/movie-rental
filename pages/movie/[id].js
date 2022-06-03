@@ -5,6 +5,8 @@ import ActionButton from "../../components/ActionButton";
 import useSWR from "swr";
 import { BASE_URL, IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
+import { useUser } from "@auth0/nextjs-auth0";
+import TwoPaneLayout from "../../components/TwoPaneLayout";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -30,26 +32,16 @@ export async function getStaticPaths() {
     };
 }
 
-const Container = styled.div`
-    width: 100%;
-    background-color: ${({ theme }) => theme.panels.first};
-    height: min(100vh, auto);
-    padding: 30px 0;
+const ImageWrapper = styled.div`
+    width: 500px;
+
+    @media ${device.desktop} {
+        width: 400px;
+    }
 
     @media ${device.tablet} {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        width: min(80%, 426px);
     }
-
-    & > div:last-child {
-        margin-top: 15px;
-    }
-`;
-
-const ImageWrapper = styled.div`
-    position: relative;
-    width: min(80%, 426px);
 `;
 
 const Text = styled.div`
@@ -57,6 +49,11 @@ const Text = styled.div`
     font-size: 32px;
     text-align: center;
     color: ${({ theme }) => theme.font.primary};
+    width: 800px;
+
+    @media ${device.desktop} {
+        width: unset;
+    }
 `;
 
 const Description = styled(Text)`
@@ -74,9 +71,10 @@ const SmallerText = styled(Text)`
 `;
 
 export default function Movie({ movie }) {
+    const { user, isLoading } = useUser();
     const { id, title, release_date, vote_average, vote_count, poster_path, overview, genres } = movie;
     const posterSrc = `${IMAGES_URL}${poster_path}`;
-    const { data, error, mutate } = useSWR(`/api/rent?check=${id}`, fetcher, { refreshInterval: 250 });
+    const { data, mutate } = useSWR(`/api/rent?check=${id}`, fetcher, { refreshInterval: 250 });
     const rentMovie = async () => {
         fetch("/api/rent", { method: "POST", body: JSON.stringify({ movieId: id, title }) });
         mutate({ isRented: true });
@@ -88,22 +86,33 @@ export default function Movie({ movie }) {
 
     return (
         <ContentWrapper>
-            <Container>
-                <ImageWrapper>
-                    <Image src={posterSrc} width={426} height={639} alt="poster" />
-                </ImageWrapper>
-                <Text>{title}</Text>
-                <Description>{overview}</Description>
-                <Genres>{genres.map(({ name }, index) => (index + 1 === genres.length ? name : `${name}, `))}</Genres>
-                <SmallerText>Release: {release_date}</SmallerText>
-                <SmallerText>
-                    Rating: {vote_average} / {vote_count} votes
-                </SmallerText>
-                <ActionButton
-                    action={data ? (data.isRented ? returnMovie : rentMovie) : () => {}}
-                    title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
-                />
-            </Container>
+            <TwoPaneLayout
+                left={
+                    <>
+                        <ImageWrapper>
+                            <Image src={posterSrc} width={426} height={639} alt="poster" />
+                        </ImageWrapper>
+                    </>
+                }
+                right={
+                    <>
+                        <Text>{title}</Text>
+                        <Description>{overview}</Description>
+                        <Genres>{genres.map(({ name }, index) => (index + 1 === genres.length ? name : `${name}, `))}</Genres>
+                        <SmallerText>Release: {release_date}</SmallerText>
+                        <SmallerText style={{ marginBottom: "20px" }}>
+                            Rating: {vote_average} / {vote_count} votes
+                        </SmallerText>
+                        {user && (
+                            <ActionButton
+                                action={data ? (data.isRented ? returnMovie : rentMovie) : () => {}}
+                                title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
+                            />
+                        )}
+                        {!user && !isLoading && <ActionButton action={() => {}} title={isLoading ? "Loading" : "Blocked"} />}
+                    </>
+                }
+            />
         </ContentWrapper>
     );
 }

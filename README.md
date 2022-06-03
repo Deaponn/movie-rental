@@ -9,4 +9,4 @@
 - auth0 integration (registration, login, useUser)
 - integration with TMDB RESTful api
 - deployment on Vercel
-- SWR (for API calls)
+- SWR (for API calls, optimistic data mutation)
