@@ -109,7 +109,12 @@ export default function Movie({ movie }) {
                                 title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
                             />
                         )}
-                        {!user && !isLoading && <ActionButton action={() => {}} title={isLoading ? "Loading" : "Blocked"} />}
+                        {!user && !isLoading && (
+                            <>
+                                <ActionButton title={isLoading ? "Loading" : "Blocked"} inactive />
+                                <SmallerText>You need to login first</SmallerText>
+                            </>
+                        )}
                     </>
                 }
             />

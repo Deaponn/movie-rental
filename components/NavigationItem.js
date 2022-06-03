@@ -16,7 +16,7 @@ const OuterWrapper = styled.div`
     grid-template-rows: 100%;
     overflow: hidden;
     text-decoration: none;
-    cursor: pointer;
+    cursor: ${({inactive}) => inactive ? "not-allowed" : "pointer"};
 `;
 
 const Background = styled(animated.div)`
@@ -51,7 +51,7 @@ const StyledLink = styled.div`
     height: 100%;
 `;
 
-export function Content({ title, isOpen, order, onNavigate }) {
+export function Content({ title, isOpen, order, onNavigate, inactive }) {
     const [isHovered, setIsHovered] = useState(false);
     const { translateX } = useSpring({
         translateX: isHovered ? "-50%" : isOpen ? "-50%" : "0",
@@ -67,6 +67,7 @@ export function Content({ title, isOpen, order, onNavigate }) {
                 setIsHovered(false);
             }}
             onClick={onNavigate ? onNavigate : null}
+            inactive={inactive}
         >
             <Background order={order} style={{ translateX }} />
             <InnerWrapper>
