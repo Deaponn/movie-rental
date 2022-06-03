@@ -6,6 +6,9 @@ import SecondParallaxLayer from "../components/Index/SecondParallaxLayer";
 import ThirdParallaxLayer from "../components/Index/ThirdParallaxLayer";
 import Footer from "../components/Footer";
 import FourthParallaxLayer from "../components/Index/FourthParallaxLayer";
+import { device } from "../constants/breakpoints";
+import useThrottle from "../lib/useThrottle";
+import { useEffect } from "react";
 
 const StyledParallax = styled(Parallax)`
     position: absolute;
@@ -18,7 +21,24 @@ const Background = styled.div`
     height: ${() => window.innerHeight}px;
 `;
 
+const DesktopInfo = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    height: calc(100vh - 500px);
+    font-family: Lato, sans-serif;
+    color: ${({ theme }) => theme.font.primary};
+    background-color: ${({ theme }) => theme.panels.fourth};
+    font-size: 48px;
+
+    @media ${device.tablet}{
+        display: none;
+    }
+`
+
 export default function Home() {
+
     return (
         <>
             <Head>
@@ -30,7 +50,8 @@ export default function Home() {
                     <Background which="second" />
                     <Background which="third" />
                     <Background which="fourth" />
-                    <Footer mainSite />
+                    <DesktopInfo>Do not hesitate, explore the website!</DesktopInfo>
+                    <Footer />
                 </ParallaxLayer>
                 <FirstParallaxLayer />
                 <SecondParallaxLayer />

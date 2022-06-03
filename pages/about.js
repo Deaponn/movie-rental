@@ -52,6 +52,11 @@ export default function About({}) {
                 <Text>Only the most popular movies make it to the list!</Text>
             </Segment>
             <Background src="/gfx/popcorn.jpg" />
+            <Segment>
+                <Text>You can check movies you have rented</Text>
+                <Text>Under your Account tab</Text>
+                <Text>The site supports dark and light theme</Text>
+            </Segment>
         </ContentWrapper>
     );
 }

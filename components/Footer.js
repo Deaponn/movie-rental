@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     padding-top: 56px;
     border-top: 3px solid ${({theme}) => theme.accent.first};
     width: calc(100vw - (100vw - 100%));
-    height: ${({ mainSite }) => (mainSite ? window.innerHeight : 500)}px;
+    height: 500px;
     background-color: ${({ theme }) => theme.primary};
 
     @media ${device.tablet} {
@@ -81,14 +81,14 @@ const Text = styled.div`
     }
 `;
 
-export default function Footer({ mainSite }) {
+export default function Footer() {
     const { user, error, isLoading } = useUser();
     const isNotLogged = isLoading || !user;
 
     if (error) return <div>an error occured while retrieving login information: {error}</div>;
 
     return (
-        <Wrapper mainSite={mainSite}>
+        <Wrapper>
             <FooterGroup>
                 <Title>Menu</Title>
                 <FooterLink title="Home" href="/" />

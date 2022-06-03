@@ -26,17 +26,17 @@ const ImageWrapper = styled.div`
 export default function ThirdParallaxLayer({}) {
     return (
         <>
-            <StyledParallaxLayer offset={1} speed={1.9}>
+            <StyledParallaxLayer offset={1} speed={1.3}>
                 <Image src={moviesLibrary} width={600} height={300} alt="movies" placeholder="blur" />
                 now go to the library
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.45} speed={1.6}>
+            <StyledParallaxLayer offset={1.45} speed={1}>
                 choose a movie to watch
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.65} speed={1.3}>
+            <StyledParallaxLayer offset={1.65} speed={0.7}>
                 make yourself at home!
             </StyledParallaxLayer>
-            <StyledParallaxLayer offset={1.6} speed={2.5}>
+            <StyledParallaxLayer offset={1.6} speed={1.5}>
                 <ImageWrapper>
                     <Image width={556} height={677} src={popcorn} alt="popcorn" placeholder="blur" />
                 </ImageWrapper>
