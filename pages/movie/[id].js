@@ -1,12 +1,13 @@
-import ContentWrapper from "../../components/ContentWrapper";
-import styled from "styled-components";
-import Image from "next/image";
 import ActionButton from "../../components/ActionButton";
+import ContentWrapper from "../../components/ContentWrapper";
+import Head from "next/head";
+import Image from "next/image";
+import styled from "styled-components";
+import TwoPaneLayout from "../../components/TwoPaneLayout";
 import useSWR from "swr";
 import { BASE_URL, IMAGES_URL } from "../../constants/apiConnection";
 import { device } from "../../constants/breakpoints";
 import { useUser } from "@auth0/nextjs-auth0";
-import TwoPaneLayout from "../../components/TwoPaneLayout";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
@@ -85,39 +86,44 @@ export default function Movie({ movie }) {
     };
 
     return (
-        <ContentWrapper>
-            <TwoPaneLayout
-                left={
-                    <>
-                        <ImageWrapper>
-                            <Image src={posterSrc} width={426} height={639} alt="poster" />
-                        </ImageWrapper>
-                    </>
-                }
-                right={
-                    <>
-                        <Text>{title}</Text>
-                        <Description>{overview}</Description>
-                        <Genres>{genres.map(({ name }, index) => (index + 1 === genres.length ? name : `${name}, `))}</Genres>
-                        <SmallerText>Release: {release_date}</SmallerText>
-                        <SmallerText style={{ marginBottom: "20px" }}>
-                            Rating: {vote_average} / {vote_count} votes
-                        </SmallerText>
-                        {user && (
-                            <ActionButton
-                                action={data ? (data.isRented ? returnMovie : rentMovie) : () => {}}
-                                title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
-                            />
-                        )}
-                        {!user && !isLoading && (
-                            <>
-                                <ActionButton title={isLoading ? "Loading" : "Blocked"} inactive />
-                                <SmallerText>You need to login first</SmallerText>
-                            </>
-                        )}
-                    </>
-                }
-            />
-        </ContentWrapper>
+        <>
+            <Head>
+                <title>{title}</title>
+            </Head>
+            <ContentWrapper>
+                <TwoPaneLayout
+                    left={
+                        <>
+                            <ImageWrapper>
+                                <Image src={posterSrc} width={426} height={639} alt="poster" />
+                            </ImageWrapper>
+                        </>
+                    }
+                    right={
+                        <>
+                            <Text>{title}</Text>
+                            <Description>{overview}</Description>
+                            <Genres>{genres.map(({ name }, index) => (index + 1 === genres.length ? name : `${name}, `))}</Genres>
+                            <SmallerText>Release: {release_date}</SmallerText>
+                            <SmallerText style={{ marginBottom: "20px" }}>
+                                Rating: {vote_average} / {vote_count} votes
+                            </SmallerText>
+                            {user && (
+                                <ActionButton
+                                    action={data ? (data.isRented ? returnMovie : rentMovie) : () => {}}
+                                    title={data ? (data.isRented ? "Return" : "Rent") : "Loading"}
+                                />
+                            )}
+                            {!user && !isLoading && (
+                                <>
+                                    <ActionButton title={isLoading ? "Loading" : "Blocked"} inactive />
+                                    <SmallerText>You need to login first</SmallerText>
+                                </>
+                            )}
+                        </>
+                    }
+                />
+            </ContentWrapper>
+        </>
     );
 }

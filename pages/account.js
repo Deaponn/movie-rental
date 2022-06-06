@@ -1,15 +1,14 @@
-import styled from "styled-components";
-import ContentWrapper from "../components/ContentWrapper";
-import { useUser } from "@auth0/nextjs-auth0";
-import useSWR from "swr";
-import Image from "next/image";
-import profilePic from "../public/gfx/profile-pic.png";
-import { device } from "../constants/breakpoints";
 import ActionButton from "../components/ActionButton";
+import ContentWrapper from "../components/ContentWrapper";
+import Head from "next/head";
+import Image from "next/image";
 import TwoPaneLayout from "../components/TwoPaneLayout";
-import { getSession } from "@auth0/nextjs-auth0";
 import executeQuery from "../lib/databaseConnection";
-import {useState} from "react"
+import profilePic from "../public/gfx/profile-pic.png";
+import styled from "styled-components";
+import { device } from "../constants/breakpoints";
+import { getSession } from "@auth0/nextjs-auth0";
+import { useState } from "react";
 
 const Text = styled.div`
     font-family: Lato, sans-serif;
@@ -47,64 +46,79 @@ const ErrorWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: ${({big}) => big ? "68px" : "unset"};
+    font-size: ${({ big }) => (big ? "68px" : "unset")};
     font-family: Lucida Console;
     background-color: lightcoral;
     color: firebrick;
     text-align: center;
 `;
 
-export async function getServerSideProps({req, res}){
-    const sessionData = getSession(req, res)
-    if(!sessionData) return {
-        props: {
-            name: false,
-        }
-    }
-    const { user: { name, sub } = {}, error: userError } = sessionData
+export async function getServerSideProps({ req, res }) {
+    const sessionData = getSession(req, res);
+    if (!sessionData)
+        return {
+            props: {
+                name: false,
+            },
+        };
+    const { user: { name, sub } = {}, error: userError } = sessionData;
     const result = await executeQuery({
         query: `SELECT * FROM movies WHERE user_id='${sub}'`,
     });
     // need to map the result because the response is an array of RowDataPacket which cant be serialized as JSON
-    const mapped = result.map(({id, movie_id, title, date}) => {return {id, movie_id, title, date}})
+    const mapped = result.map(({ id, movie_id, title, date }) => {
+        return { id, movie_id, title, date };
+    });
     return {
         props: {
             userError: userError ? userError : null,
             name,
-            initialMovies: mapped
-        }
-    }
+            initialMovies: mapped,
+        },
+    };
 }
 
-export default function Account({userError, fetchError, name, initialMovies}) {
-    const [movieList, setMovieList] = useState(initialMovies)
+export default function Account({ userError, fetchError, name, initialMovies }) {
+    const [movieList, setMovieList] = useState(initialMovies);
 
     const returnMovie = async (movieId) => {
         fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movieId }) });
-        setMovieList(newList => newList.filter((movie) => movie.id !== movieId))
+        setMovieList((newList) => newList.filter((movie) => movie.id !== movieId));
     };
 
     if (userError)
         return (
             <ContentWrapper>
+                <Head>
+                    <title>Account</title>
+                </Head>
                 <ErrorWrapper>{JSON.stringify(userError)}</ErrorWrapper>
             </ContentWrapper>
         );
     if (fetchError)
         return (
             <ContentWrapper>
+                <Head>
+                    <title>Account</title>
+                </Head>
                 <ErrorWrapper>{JSON.stringify(fetchError)}</ErrorWrapper>
             </ContentWrapper>
         );
     if (!name)
         return (
             <ContentWrapper>
+                <Head>
+                    <title>Account</title>
+                </Head>
                 <ErrorWrapper big>access denied</ErrorWrapper>
             </ContentWrapper>
         );
 
     return (
         <ContentWrapper>
+            <Head>
+                <title>Account</title>
+            </Head>
             <TwoPaneLayout
                 left={
                     <>
@@ -116,22 +130,20 @@ export default function Account({userError, fetchError, name, initialMovies}) {
                 right={
                     <>
                         <Text style={{ marginBottom: "15px" }}>Movies you have rented:</Text>
-                        {
-                            movieList.map(({ id, title, date, movie_id }) => (
-                                <Movie key={id}>
-                                    <Details>
-                                        <MovieText>{title}</MovieText>
-                                        <MovieText>At: {date}</MovieText>
-                                    </Details>
-                                    <ActionButton
-                                        action={() => {
-                                            returnMovie(movie_id);
-                                        }}
-                                        title={"Return"}
-                                    />
-                                </Movie>
-                            ))
-                        }
+                        {movieList.map(({ id, title, date, movie_id }) => (
+                            <Movie key={id}>
+                                <Details>
+                                    <MovieText>{title}</MovieText>
+                                    <MovieText>At: {date}</MovieText>
+                                </Details>
+                                <ActionButton
+                                    action={() => {
+                                        returnMovie(movie_id);
+                                    }}
+                                    title={"Return"}
+                                />
+                            </Movie>
+                        ))}
                     </>
                 }
             />

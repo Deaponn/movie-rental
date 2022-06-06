@@ -16,13 +16,12 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        overflow: hidden;
         --theme-color-transition: background-color 0.5s, color 0.5s;
     }
 `;
 
 const Wrapper = styled.div`
-    ${({ noStyle }) => (noStyle ? "" : "height:100vh; overflow: auto;")}
+    ${({ noStyle }) => (noStyle ? "" : "height:100vh")}
 `;
 
 export default function App({ Component, pageProps }) {

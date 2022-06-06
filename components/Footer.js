@@ -1,12 +1,12 @@
-import styled from "styled-components";
 import FooterLink from "./Footer/FooterLink";
 import Image from "next/image";
+import fbIcon from "../public/gfx/facebook-icon.png";
+import githubIcon from "../public/gfx/github-icon.png";
+import instagramIcon from "../public/gfx/instagram-icon.png";
+import linkedinIcon from "../public/gfx/linkedin-icon.png";
+import styled from "styled-components";
 import { device } from "../constants/breakpoints";
 import { useUser } from "@auth0/nextjs-auth0";
-import fbIcon from "../public/gfx/facebook-icon.png";
-import instagramIcon from "../public/gfx/instagram-icon.png";
-import githubIcon from "../public/gfx/github-icon.png";
-import linkedinIcon from "../public/gfx/linkedin-icon.png";
 
 const Wrapper = styled.div`
     display: flex;
@@ -120,7 +120,7 @@ export default function Footer() {
                     <Image src={githubIcon} alt="github" height={40} width={40} />
                     <div>Github</div>
                 </FooterLink>
-                <FooterLink href="https://www.linkedin.com/in/bartosz-sajecki-161a961b8/" external>
+                <FooterLink href="https://www.linkedin.com/in/bartosz-sajecki/" external>
                     <Image src={linkedinIcon} alt="linkedin" height={40} width={40} />
                     <div>Linkedin</div>
                 </FooterLink>

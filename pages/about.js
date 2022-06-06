@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import ContentWrapper from "../components/ContentWrapper";
+import styled from "styled-components";
 import { device } from "../constants/breakpoints";
 
 const Segment = styled.div`

@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import Image from "next/image";
 import glassesEmoji from "../../public/gfx/3d-glasses-emoji.png";
+import styled from "styled-components";
 import { ParallaxLayer } from "@react-spring/parallax";
 
 const StyledParallaxLayer = styled(ParallaxLayer)`

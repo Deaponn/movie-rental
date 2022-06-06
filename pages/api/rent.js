@@ -1,5 +1,5 @@
-import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 import executeQuery from "../../lib/databaseConnection";
+import { getSession, withApiAuthRequired } from "@auth0/nextjs-auth0";
 
 export default withApiAuthRequired(async function shows(req, res) {
     try {
@@ -9,11 +9,8 @@ export default withApiAuthRequired(async function shows(req, res) {
         switch (req.method) {
             case "GET": {
                 const { check } = req.query;
-                if(!check){
-                    const result = await executeQuery({
-                        query: `SELECT * FROM movies WHERE user_id='${userId}'`,
-                    });
-                    res.status(200).json({ success: true, result });
+                if (!check) {
+                    res.status(200).json({ success: false, message: "Missing mandatory query parameter 'check'" });
                     return;
                 }
                 const result = await executeQuery({
@@ -36,7 +33,6 @@ export default withApiAuthRequired(async function shows(req, res) {
             case "DELETE": {
                 const { movieId } = JSON.parse(req.body);
                 if (!movieId) return res.status(401).json({ success: false, message: "Invalid request" });
-                console.log(movieId)
                 await executeQuery({
                     query: `DELETE FROM movies WHERE movie_id=? AND user_id=?`,
                     argument: [movieId, userId],

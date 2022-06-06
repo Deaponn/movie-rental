@@ -1,10 +1,10 @@
-import styled from "styled-components";
-import Image from "next/image";
 import Hamburger from "./Hamburger";
+import Image from "next/image";
 import MenuSmartphones from "./MenuSmartphones";
 import NavigationItem from "../NavigationItem";
 import Switch from "./Switch";
 import icon from "../../public/ui/icon.png";
+import styled from "styled-components";
 import { device } from "../../constants/breakpoints";
 import { useState } from "react";
 

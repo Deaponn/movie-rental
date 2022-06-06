@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import Link from "next/link";
+import styled from "styled-components";
 import { useSpring, animated } from "@react-spring/web";
 import { useState } from "react";
 

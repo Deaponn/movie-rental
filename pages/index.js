@@ -1,11 +1,11 @@
-import styled from "styled-components";
-import { Parallax, ParallaxLayer } from "@react-spring/parallax";
-import Head from "next/head";
 import FirstParallaxLayer from "../components/Index/FirstParallaxLayer";
-import SecondParallaxLayer from "../components/Index/SecondParallaxLayer";
-import ThirdParallaxLayer from "../components/Index/ThirdParallaxLayer";
 import Footer from "../components/Footer";
 import FourthParallaxLayer from "../components/Index/FourthParallaxLayer";
+import Head from "next/head";
+import SecondParallaxLayer from "../components/Index/SecondParallaxLayer";
+import ThirdParallaxLayer from "../components/Index/ThirdParallaxLayer";
+import styled from "styled-components";
+import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 import { device } from "../constants/breakpoints";
 
 const StyledParallax = styled(Parallax)`

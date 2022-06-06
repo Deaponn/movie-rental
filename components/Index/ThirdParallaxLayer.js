@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import Image from "next/image";
 import moviesLibrary from "../../public/gfx/movies-library.png";
 import popcorn from "../../public/gfx/popcorn.png"
+import styled from "styled-components";
 import { ParallaxLayer } from "@react-spring/parallax";
 
 const StyledParallaxLayer = styled(ParallaxLayer)`

@@ -1,5 +1,5 @@
-import Head from "next/head";
 import ContentWrapper from "../components/ContentWrapper";
+import Head from "next/head";
 import Showcase from "../components/Movies/Showcase";
 import { BASE_URL } from "../constants/apiConnection";
 

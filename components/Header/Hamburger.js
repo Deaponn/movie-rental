@@ -1,5 +1,5 @@
 import styled, { useTheme } from "styled-components";
-import { useSpring, animated, config } from "@react-spring/web"
+import { useSpring, animated } from "@react-spring/web"
 
 const HamburgerDiv = styled.div`
     right: 9px;

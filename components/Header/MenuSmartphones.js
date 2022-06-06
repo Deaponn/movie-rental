@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import NavigationItem from "../NavigationItem";
+import styled from "styled-components";
 import Switch from "./Switch";
 import { useSpring, animated } from "@react-spring/web";
 

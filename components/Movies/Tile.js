@@ -1,8 +1,8 @@
-import styled from "styled-components";
 import Image from "next/image";
 import NavigationItem from "../NavigationItem";
-import { device } from "../../constants/breakpoints";
+import styled from "styled-components";
 import { IMAGES_URL } from "../../constants/apiConnection";
+import { device } from "../../constants/breakpoints";
 
 const Wrapper = styled.div`
     width: 426px;

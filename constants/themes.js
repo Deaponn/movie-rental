@@ -32,8 +32,9 @@ const light = {
     },
     panels: {
         first: "#F7F7FF",
-        second: "#FE5F55",
+        second: "#D9C5B2",
         third: "#BDD5EA",
+        fourth: "#F3F3F4",
     },
 };
 
