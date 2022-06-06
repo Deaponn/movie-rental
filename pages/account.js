@@ -7,8 +7,9 @@ import profilePic from "../public/gfx/profile-pic.png";
 import { device } from "../constants/breakpoints";
 import ActionButton from "../components/ActionButton";
 import TwoPaneLayout from "../components/TwoPaneLayout";
-
-const fetcher = (url, method, argument) => fetch(url, { method, body: argument }).then((res) => res.json());
+import { getSession } from "@auth0/nextjs-auth0";
+import executeQuery from "../lib/databaseConnection";
+import {useState} from "react"
 
 const Text = styled.div`
     font-family: Lato, sans-serif;
@@ -53,14 +54,34 @@ const ErrorWrapper = styled.div`
     text-align: center;
 `;
 
-export default function Account({}) {
-    const { user: { name, sub } = {}, error: userError, isLoading } = useUser();
-    const { data, error: fetchError, mutate } = useSWR(sub ? `/api/rent?user_id=${sub}` : null, fetcher);
+export async function getServerSideProps({req, res}){
+    const sessionData = getSession(req, res)
+    if(!sessionData) return {
+        props: {
+            name: false,
+        }
+    }
+    const { user: { name, sub } = {}, error: userError } = sessionData
+    const result = await executeQuery({
+        query: `SELECT * FROM movies WHERE user_id='${sub}'`,
+    });
+    // need to map the result because the response is an array of RowDataPacket which cant be serialized as JSON
+    const mapped = result.map(({id, movie_id, title, date}) => {return {id, movie_id, title, date}})
+    return {
+        props: {
+            userError: userError ? userError : null,
+            name,
+            initialMovies: mapped
+        }
+    }
+}
+
+export default function Account({userError, fetchError, name, initialMovies}) {
+    const [movieList, setMovieList] = useState(initialMovies)
+
     const returnMovie = async (movieId) => {
         fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movieId }) });
-        const newList = data.result.filter((movie) => movie.id !== movieId);
-        console.log(newList);
-        mutate({ ...data, result: newList });
+        setMovieList(newList => newList.filter((movie) => movie.id !== movieId))
     };
 
     if (userError)
@@ -75,7 +96,7 @@ export default function Account({}) {
                 <ErrorWrapper>{JSON.stringify(fetchError)}</ErrorWrapper>
             </ContentWrapper>
         );
-    if (!sub)
+    if (!name)
         return (
             <ContentWrapper>
                 <ErrorWrapper big>access denied</ErrorWrapper>
@@ -89,16 +110,14 @@ export default function Account({}) {
                     <>
                         <Image src={profilePic} placeholder="blur" alt="profile picture" />
                         <Text>Logged in as:</Text>
-                        <Text>{isLoading ? "loading..." : name}</Text>
+                        <Text>{name}</Text>
                     </>
                 }
                 right={
                     <>
                         <Text style={{ marginBottom: "15px" }}>Movies you have rented:</Text>
-                        {!data ? (
-                            <Text>Loading movie list...</Text>
-                        ) : (
-                            data.result.map(({ id, title, date, movie_id }) => (
+                        {
+                            movieList.map(({ id, title, date, movie_id }) => (
                                 <Movie key={id}>
                                     <Details>
                                         <MovieText>{title}</MovieText>
@@ -112,7 +131,7 @@ export default function Account({}) {
                                     />
                                 </Movie>
                             ))
-                        )}
+                        }
                     </>
                 }
             />

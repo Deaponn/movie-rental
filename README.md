@@ -3,7 +3,7 @@
 ## [Live preview](movie-rental-kappa.vercel.app)
 
 ## Things used:
-- next.js (getStaticProps, getStaticPaths, dynamic routing, RESTful API)
+- next.js (getStaticProps, getServerSideProps, getStaticPaths, client side, dynamic routing, RESTful API)
 - styled-components
 - react-spring (basic animations and parallax usage)
 - auth0 integration (registration, login, useUser)

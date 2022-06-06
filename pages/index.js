@@ -7,8 +7,6 @@ import ThirdParallaxLayer from "../components/Index/ThirdParallaxLayer";
 import Footer from "../components/Footer";
 import FourthParallaxLayer from "../components/Index/FourthParallaxLayer";
 import { device } from "../constants/breakpoints";
-import useThrottle from "../lib/useThrottle";
-import { useEffect } from "react";
 
 const StyledParallax = styled(Parallax)`
     position: absolute;
