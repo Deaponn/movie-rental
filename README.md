@@ -1,6 +1,6 @@
 # Portfolio app made to showcase various technologies knowledge and usage
 
-## [Live preview](movie-rental-kappa.vercel.app)
+## [Live preview](https://movie-rental-kappa.vercel.app)
 
 ## Things used:
 - next.js (getStaticProps, getServerSideProps, getStaticPaths, client side, dynamic routing, RESTful API)
