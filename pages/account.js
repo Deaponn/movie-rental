@@ -65,6 +65,7 @@ export async function getServerSideProps({ req, res }) {
     const result = await executeQuery({
         query: `SELECT * FROM movies WHERE user_id='${sub}'`,
     });
+
     // need to map the result because the response is an array of RowDataPacket which cant be serialized as JSON
     const mapped = result.map(({ id, movie_id, title, date }) => {
         return { id, movie_id, title, date };
@@ -83,7 +84,7 @@ export default function Account({ userError, fetchError, name, initialMovies }) 
 
     const returnMovie = async (movieId) => {
         fetch("/api/rent", { method: "DELETE", body: JSON.stringify({ movieId }) });
-        setMovieList((newList) => newList.filter((movie) => movie.id !== movieId));
+        setMovieList((newList) => newList.filter((movie) => movie.movie_id !== movieId));
     };
 
     if (userError)
