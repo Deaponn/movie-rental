@@ -1,6 +1,7 @@
 import NavigationItem from "../NavigationItem";
 import styled from "styled-components";
 import { ParallaxLayer } from "@react-spring/parallax";
+import { useUser } from "@auth0/nextjs-auth0";
 
 const StyledParallaxLayer = styled(ParallaxLayer)`
     display: flex;
@@ -14,17 +15,23 @@ const StyledParallaxLayer = styled(ParallaxLayer)`
 `;
 
 export default function SecondParallaxLayer() {
+    const { user, isLoading } = useUser();
+    const isLogged = !isLoading && user;
+
     return (
         <>
-            <StyledParallaxLayer offset={0.6} speed={0.5} style={{zIndex: 2}}>
-                <NavigationItem title="Login" route="/api/auth/login" type="auth0" />
+            <StyledParallaxLayer offset={0.6} speed={0.5} style={{ zIndex: 2 }}>
+                <NavigationItem
+                    title={isLogged ? "Watch" : "Login"}
+                    route={isLogged ? "/movies" : "/api/auth/login"}
+                    type={isLogged ? "navigation" : "auth0"}
+                />
             </StyledParallaxLayer>
             <StyledParallaxLayer offset={0.95} speed={0.9}>
-                just login!
+                {isLogged ? "head to the library!" : "just login!"}
             </StyledParallaxLayer>
             <StyledParallaxLayer offset={0.999} speed={0.6}>
-                it takes only so
-                little work to begin
+                it takes only so little work to begin
             </StyledParallaxLayer>
         </>
     );
