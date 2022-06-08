@@ -8,7 +8,7 @@ const A = styled.a`
 `;
 
 const OuterWrapper = styled.div`
-    width: 120px;
+    width: ${({ wide }) => (wide ? "160px" : "120px")};
     height: 40px;
     text-align: center;
     display: grid;
@@ -16,7 +16,7 @@ const OuterWrapper = styled.div`
     grid-template-rows: 100%;
     overflow: hidden;
     text-decoration: none;
-    cursor: ${({inactive}) => inactive ? "not-allowed" : "pointer"};
+    cursor: ${({ inactive }) => (inactive ? "not-allowed" : "pointer")};
 `;
 
 const Background = styled(animated.div)`
@@ -30,11 +30,11 @@ const Background = styled(animated.div)`
 const InnerWrapper = styled.div`
     grid-column: 1;
     grid-row: 1;
-    width: 112px;
+    width: ${({ wide }) => (wide ? "152px" : "112px")};
     height: 34px;
     background-color: ${({ theme }) => theme.primary};
     margin: auto;
-    z-index: ${({header}) => header ? 1 : 0};
+    z-index: ${({ header }) => (header ? 1 : 0)};
 `;
 
 const StyledLink = styled.div`
@@ -51,7 +51,7 @@ const StyledLink = styled.div`
     height: 100%;
 `;
 
-export function Content({ title, isOpen, order, onNavigate, inactive }) {
+export function Content({ title, isOpen, order, onNavigate, inactive, wide }) {
     const [isHovered, setIsHovered] = useState(false);
     const { translateX } = useSpring({
         translateX: isHovered ? "-50%" : isOpen ? "-50%" : "0",
@@ -68,9 +68,10 @@ export function Content({ title, isOpen, order, onNavigate, inactive }) {
             }}
             onClick={onNavigate ? onNavigate : null}
             inactive={inactive}
+            wide={wide}
         >
             <Background order={order} style={{ translateX }} />
-            <InnerWrapper>
+            <InnerWrapper wide={wide}>
                 <StyledLink>{title}</StyledLink>
             </InnerWrapper>
         </OuterWrapper>
