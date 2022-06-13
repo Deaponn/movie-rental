@@ -2,7 +2,7 @@ import FooterLink from "./Footer/FooterLink";
 import Image from "next/image";
 import fbIcon from "../public/gfx/facebook-icon.png";
 import githubIcon from "../public/gfx/github-icon.png";
-import instagramIcon from "../public/gfx/instagram-icon.png";
+import youtubeIcon from "../public/gfx/youtube-icon.png";
 import linkedinIcon from "../public/gfx/linkedin-icon.png";
 import styled from "styled-components";
 import { device } from "../constants/breakpoints";
@@ -112,9 +112,9 @@ export default function Footer() {
                     <Image src={fbIcon} alt="fb" height={40} width={40} />
                     <div>Facebook</div>
                 </FooterLink>
-                <FooterLink href="https://www.instagram.com/" external>
-                    <Image src={instagramIcon} alt="instagram" height={40} width={40} />
-                    <div>Instagram</div>
+                <FooterLink href="https://www.youtube.com/watch?v=dQw4w9WgXcQ/" external>
+                    <Image src={youtubeIcon} alt="youtube" height={40} width={40} />
+                    <div>YouTube</div>
                 </FooterLink>
                 <FooterLink href="https://github.com/Deaponn/" external>
                     <Image src={githubIcon} alt="github" height={40} width={40} />
